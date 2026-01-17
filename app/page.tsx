@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import DepartureBoard from "@/components/DepartureBoard";
 import { fetchDepartures } from "@/lib/actions";
 
@@ -9,9 +8,5 @@ export const revalidate = 600000;
 export default async function Home() {
   const initialDepartures = await fetchDepartures();
 
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-black" />}>
-      <DepartureBoard initialDepartures={initialDepartures} />
-    </Suspense>
-  );
+  return <DepartureBoard initialDepartures={initialDepartures} />;
 }

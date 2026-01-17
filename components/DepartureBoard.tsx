@@ -3,10 +3,9 @@
 import { useEffect } from "react";
 import { type ProcessedDeparture } from "@/lib/types";
 import { formatMinutesToReadable } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Clock from "@/components/Clock";
-import Link from "next/link";
 
 interface DepartureBoardProps {
   initialDepartures: ProcessedDeparture[];
@@ -44,8 +43,6 @@ export default function DepartureBoard({
   initialDepartures,
 }: DepartureBoardProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const hideContact = searchParams.has("hideContact");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,9 +61,7 @@ export default function DepartureBoard({
 
   return (
     <main
-      className={`${
-        hideContact && "cursor-none"
-      } min-h-screen bg-white text-black p-2 sm:p-3 md:p-4 relative`}
+      className={"min-h-screen bg-white text-black p-2 sm:p-3 md:p-4 relative"}
     >
         <Clock />
       <div className="flex justify-center gap-4 sm:gap-6 md:gap-10 items-center ">
@@ -76,32 +71,31 @@ export default function DepartureBoard({
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full border-separate border-spacing-y-0.5 sm:border-spacing-y-1 md:border-spacing-y-2 table-fixed">
+        <table className="w-full border-separate border-spacing-y-0.5 sm:border-spacing-y-1 md:border-spacing-y-2">
           <thead>
             <tr className="text-black">
-              <th className={`${commonPadding} text-left w-[8%]`}></th>
               <th
-                className={`${commonPadding} text-left w-[10%] ${headerTextSize}`}
+                className={`${commonPadding} text-left whitespace-nowrap ${headerTextSize}`}
               >
                 Line
               </th>
               <th
-                className={`${commonPadding} text-left w-[20%] ${headerTextSize} text-orange-500`}
+                className={`${commonPadding} text-left whitespace-nowrap ${headerTextSize} text-orange-500`}
               >
                 Departs
               </th>
               <th
-                className={`${commonPadding} text-left w-[12%] ${headerTextSize} text-orange-500`}
+                className={`${commonPadding} text-left whitespace-nowrap ${headerTextSize} text-orange-500`}
               >
                 Time
               </th>
               <th
-                className={`${commonPadding} text-left w-[30%] ${headerTextSize}`}
+                className={`${commonPadding} text-left w-full ${headerTextSize}`}
               >
                 Station
               </th>
               <th
-                className={`${commonPadding} text-right w-[20%] ${headerTextSize} text-orange-500`}
+                className={`${commonPadding} text-right whitespace-nowrap ${headerTextSize} text-orange-500`}
               >
                 Next
               </th>
@@ -117,15 +111,6 @@ export default function DepartureBoard({
                   key={`departure-${index}`}
                   className={getRowBackground(index)}
                 >
-                  <td className={commonPadding}>
-                    <Image
-                      src={getIcon(lineType)}
-                      alt={`${lineType} icon`}
-                      width={60}
-                      height={60}
-                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16"
-                    />
-                  </td>
                   <td className={commonPadding}>
                     <span
                       className={`${getLineColor(
