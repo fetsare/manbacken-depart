@@ -28,9 +28,9 @@ const lineColorMap: Record<string, string> = {
 const REFRESH_INTERVAL = 30000;
 const MIN_ROWS = 5;
 
-const commonPadding = "px-2 sm:px-4 md:px-6 py-1 sm:py-1.5 md:py-2";
-const headerTextSize = "text-xl sm:text-2xl md:text-3xl lg:text-4xl";
-const cellTextSize = "text-xl sm:text-2xl md:text-3xl lg:text-4xl";
+const commonPadding = "px-1 sm:px-2 md:px-4 lg:px-6 py-0.5 sm:py-1 md:py-1.5 2xl:px-8 2xl:py-2";
+const headerTextSize = "text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl";
+const cellTextSize = "text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl";
 
 const getRowBackground = (index: number) =>
   index % 2 !== 0 ? "bg-gray-100" : "bg-white";
@@ -66,29 +66,29 @@ export default function DepartureBoard({
     <main
       className={`${
         hideContact && "cursor-none"
-      } min-h-screen bg-white text-black p-4 relative`}
+      } min-h-screen bg-white text-black p-2 sm:p-3 md:p-4 relative`}
     >
       {!hideContact ? (
         <Link
           href={"/contact"}
-          className="absolute top-4 left-4 text-sm sm:text-base md:text-lg lg:text-xl text-blue-600 focus:text-blue-700 hover:cursor-pointer hover:underline"
+          className="absolute top-2 left-2 text-xs sm:text-sm md:text-base text-blue-600 focus:text-blue-700 hover:cursor-pointer hover:underline"
         >
           Contact
         </Link>
       ) : (
         <Clock />
       )}
-      <div className="absolute top-4 right-4 text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">
+      <div className="absolute top-2 right-2 text-xs sm:text-sm md:text-base text-gray-600">
         Ugla
       </div>
-      <div className="flex justify-center gap-10 items-center ">
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">
+      <div className="flex justify-center gap-4 sm:gap-6 md:gap-10 items-center ">
+        <p className="text-xs sm:text-sm md:text-base text-gray-600">
           Last updated: {lastUpdated}
         </p>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full border-separate border-spacing-y-1 sm:border-spacing-y-2 table-fixed">
+        <table className="w-full border-separate border-spacing-y-0.5 sm:border-spacing-y-1 md:border-spacing-y-2 table-fixed">
           <thead>
             <tr className="text-black">
               <th className={`${commonPadding} text-left w-[8%]`}></th>
@@ -135,14 +135,14 @@ export default function DepartureBoard({
                       alt={`${lineType} icon`}
                       width={60}
                       height={60}
-                      className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16"
+                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16"
                     />
                   </td>
                   <td className={commonPadding}>
                     <span
                       className={`${getLineColor(
                         lineType
-                      )} text-white rounded-xl sm:rounded-2xl px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 font-bold ${cellTextSize} inline-block`}
+                      )} text-white rounded-lg sm:rounded-xl px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1.5 2xl:px-4 2xl:py-2 2xl:rounded-2xl font-bold ${cellTextSize} inline-block`}
                     >
                       {departure.name}
                     </span>
@@ -166,7 +166,7 @@ export default function DepartureBoard({
                   >
                     <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                       {departure.station}{" "}
-                      <span className="text-orange-500 mx-1 sm:mx-2">→</span>{" "}
+                      <span className="text-orange-500 mx-0.5 sm:mx-1 md:mx-2">→</span>{" "}
                       {departure.direction.split(" ")[0]}
                     </div>
                   </td>
@@ -187,22 +187,22 @@ export default function DepartureBoard({
                 className={getRowBackground(initialDepartures.length + index)}
               >
                 <td className={commonPadding}>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 bg-gray-300 rounded"></div>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 2xl:w-16 2xl:h-16 bg-gray-300 rounded"></div>
                 </td>
                 <td className={commonPadding}>
-                  <div className="w-12 h-6 sm:w-16 sm:h-8 md:w-20 md:h-10 lg:w-24 lg:h-12 bg-gray-300 rounded-xl"></div>
+                  <div className="w-8 h-4 sm:w-10 sm:h-5 md:w-14 md:h-6 lg:w-16 lg:h-8 xl:w-20 xl:h-10 2xl:w-24 2xl:h-12 bg-gray-300 rounded-lg"></div>
                 </td>
                 <td className={commonPadding}>
-                  <div className="w-20 h-6 sm:w-24 sm:h-8 md:w-32 md:h-10 lg:w-40 lg:h-12 bg-gray-300 rounded ml-auto"></div>
+                  <div className="w-12 h-4 sm:w-16 sm:h-5 md:w-20 md:h-6 lg:w-28 lg:h-8 xl:w-32 xl:h-10 2xl:w-40 2xl:h-12 bg-gray-300 rounded ml-auto"></div>
                 </td>
                 <td className={commonPadding}>
-                  <div className="w-24 h-6 sm:w-32 sm:h-8 md:w-40 md:h-10 lg:w-48 lg:h-12 bg-gray-300 rounded"></div>
+                  <div className="w-14 h-4 sm:w-20 sm:h-5 md:w-28 md:h-6 lg:w-36 lg:h-8 xl:w-40 xl:h-10 2xl:w-48 2xl:h-12 bg-gray-300 rounded"></div>
                 </td>
                 <td className={commonPadding}>
-                  <div className="w-16 h-6 sm:w-20 sm:h-8 md:w-24 md:h-10 lg:w-28 lg:h-12 bg-gray-300 rounded"></div>
+                  <div className="w-12 h-4 sm:w-14 sm:h-5 md:w-18 md:h-6 lg:w-20 lg:h-8 xl:w-24 xl:h-10 2xl:w-28 2xl:h-12 bg-gray-300 rounded"></div>
                 </td>
                 <td className={commonPadding}>
-                  <div className="w-16 h-6 sm:w-20 sm:h-8 md:w-24 md:h-10 lg:w-28 lg:h-12 bg-gray-300 rounded ml-auto"></div>
+                  <div className="w-12 h-4 sm:w-14 sm:h-5 md:w-18 md:h-6 lg:w-20 lg:h-8 xl:w-24 xl:h-10 2xl:w-28 2xl:h-12 bg-gray-300 rounded ml-auto"></div>
                 </td>
               </tr>
             ))}
