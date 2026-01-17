@@ -42,36 +42,28 @@ export async function fetchDepartures() {
 
         const data = await response.json();
         const departures: ApiDeparture[] = data.Departure || [];
-        console.log(departures);
+        console.log(departures)
+        
         const departureConfigMap = new Map(
           station.departures.map((d) => [d.line, d])
         );
-
         const processedDepartures = departures
           .map((departure) => {
             const timeWithoutSeconds = departure.time
               .split(":")
               .slice(0, 2)
               .join(":");
-            const match = departure.name.match(
-              /\b(Buss|Tunnelbana|Tåg|Spårväg)\s*(\d+[A-Z]?)\b/i
-            );
             const timeDifference = formatTimeDifference(departure.time);
 
-            if (!match) {
-              return {
-                name: "Unknown",
-                transportType: "Unknown",
-                time: timeWithoutSeconds,
-                timeLeft: timeDifference,
-                direction: removeParentheses(departure.direction),
-                station: stationName,
-              };
-            }
+            const lineNumber = departure.ProductAtStop?.line || "Unknown";
+            const catOutL = departure.ProductAtStop?.catOutL || "";
+            
+            const transportTypeMatch = catOutL.match(/\b(Buss|Tunnelbana|Tåg|Spårväg)\b/i);
+            const transportType = transportTypeMatch ? transportTypeMatch[1] : "Unknown";
 
             return {
-              name: match[2],
-              transportType: match[1],
+              name: lineNumber,
+              transportType: transportType,
               time: timeWithoutSeconds,
               timeLeft: timeDifference,
               direction: removeParentheses(departure.direction),
@@ -81,7 +73,10 @@ export async function fetchDepartures() {
           .filter((departure) => {
             const config = departureConfigMap.get(departure.name);
 
-            if (!config) return false;
+            if (!config) {
+              console.log(`Line ${departure.name} not in config for station ${stationName}`);
+              return false;
+            }
 
             if (
               departure.time === "Departed" ||

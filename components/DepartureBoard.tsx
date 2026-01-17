@@ -98,7 +98,7 @@ export default function DepartureBoard({
                 Line
               </th>
               <th
-                className={`${commonPadding} text-left w-[13%] ${headerTextSize} text-orange-500`}
+                className={`${commonPadding} text-left w-[15%] ${headerTextSize} text-orange-500`}
               >
                 Departs
               </th>
@@ -108,12 +108,12 @@ export default function DepartureBoard({
                 Time
               </th>
               <th
-                className={`${commonPadding} text-left w-[40%] ${headerTextSize}`}
+                className={`${commonPadding} text-left w-[30%] ${headerTextSize}`}
               >
                 Station
               </th>
               <th
-                className={`${commonPadding} text-right w-[13%] ${headerTextSize} text-orange-500`}
+                className={`${commonPadding} text-right w-[20%] ${headerTextSize} text-orange-500`}
               >
                 Next
               </th>

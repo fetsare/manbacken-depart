@@ -24,4 +24,9 @@ export interface ApiDeparture {
   name: string;
   time: string;
   direction: string;
+  ProductAtStop?: {
+    line: string;
+    displayNumber: string;
+    catOutL: string;
+  };
 }

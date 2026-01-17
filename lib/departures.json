@@ -2,9 +2,10 @@
   "stations": [
     {
       "name": "Insjön",
-      "id": 740098069,
+      "id": 740066323,
       "departures": [
-        { "line": "422", "minTimeThreshold": 2 },
+        { "line": "422", "minTimeThreshold": 2, "directions": ["Slussen"] },
+        { "line": "492", "minTimeThreshold": 2, "directions": ["Slussen"] },
         { "line": "445", "minTimeThreshold": 2 }
       ]
     },
