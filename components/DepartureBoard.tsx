@@ -29,8 +29,8 @@ const REFRESH_INTERVAL = 30000;
 const MIN_ROWS = 5;
 
 const commonPadding = "px-1 sm:px-2 md:px-4 lg:px-6 py-0.5 sm:py-1 md:py-1.5 2xl:px-8 2xl:py-2";
-const headerTextSize = "text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl";
-const cellTextSize = "text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-4xl";
+const headerTextSize = "text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl";
+const cellTextSize = "text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl";
 
 const getRowBackground = (index: number) =>
   index % 2 !== 0 ? "bg-gray-100" : "bg-white";
@@ -68,19 +68,7 @@ export default function DepartureBoard({
         hideContact && "cursor-none"
       } min-h-screen bg-white text-black p-2 sm:p-3 md:p-4 relative`}
     >
-      {!hideContact ? (
-        <Link
-          href={"/contact"}
-          className="absolute top-2 left-2 text-xs sm:text-sm md:text-base text-blue-600 focus:text-blue-700 hover:cursor-pointer hover:underline"
-        >
-          Contact
-        </Link>
-      ) : (
         <Clock />
-      )}
-      <div className="absolute top-2 right-2 text-xs sm:text-sm md:text-base text-gray-600">
-        Ugla
-      </div>
       <div className="flex justify-center gap-4 sm:gap-6 md:gap-10 items-center ">
         <p className="text-xs sm:text-sm md:text-base text-gray-600">
           Last updated: {lastUpdated}
