@@ -1,0 +1,15 @@
+{
+  "stations": [
+    {
+      "name": "Slussen",
+      "id": 740077425,
+      "departures": [
+        { "line": "422" },
+        { "line": "425" },
+        { "line": "420" },
+        { "line": "445" },
+        { "line": "492" }
+      ]
+    }
+  ]
+}

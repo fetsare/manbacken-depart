@@ -1,0 +1,18 @@
+{
+  "stations": [
+    {
+      "name": "Insjön",
+      "id": 740066323,
+      "departures": [
+        { "line": "422", "minTimeThreshold": 2, "directions": ["Slussen"] },
+        { "line": "492", "minTimeThreshold": 2, "directions": ["Slussen"] },
+        { "line": "445", "minTimeThreshold": 2 }
+      ]
+    },
+    {
+      "name": "Lagnövägen",
+      "id": 740066324,
+      "departures": [{ "line": "425", "minTimeThreshold": 5 }]
+    }
+  ]
+}

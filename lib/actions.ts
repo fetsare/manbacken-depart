@@ -1,6 +1,6 @@
 "use server";
 
-import data from "@/lib/departures.json";
+import defaultData from "@/lib/departures.json";
 import {
   type Station,
   type ProcessedDeparture,
@@ -15,10 +15,34 @@ import {
   MAX_DEPARTURES_TO_DISPLAY,
   validateConfig,
 } from "@/lib/constants";
+import { promises as fs } from "fs";
+import path from "path";
 
-const { stations } = data as { stations: Station[] };
+export async function fetchDepartures(configName: string = "default") {
+  let stations: Station[];
 
-export async function fetchDepartures() {
+  console.log(`[fetchDepartures] Loading config: ${configName}`);
+
+  if (configName === "default") {
+    stations = defaultData.stations;
+  } else {
+    try {
+      const configPath = path.join(
+        process.cwd(),
+        "lib",
+        "configs",
+        `${configName}.json`,
+      );
+      console.log(`Reading config from: ${configPath}`);
+      const fileContents = await fs.readFile(configPath, "utf8");
+      const data = JSON.parse(fileContents);
+      stations = data.stations;
+      console.log(`Loaded ${stations.length} stations from ${configName}`);
+    } catch (error) {
+      console.error(`Failed to load config ${configName}:`, error);
+      stations = defaultData.stations;
+    }
+  }
   validateConfig();
 
   const allResults = await Promise.all(
@@ -31,21 +55,19 @@ export async function fetchDepartures() {
           `${RESROBOT_API_BASE_URL}?id=${id}&format=json&accessId=${RESROBOT_ACCESS_ID}&duration=${API_DURATION}`,
           {
             cache: "no-store",
-          }
+          },
         );
         if (!response.ok) {
           console.error(
-            `Failed to fetch departures for station ${station.name}`
+            `Failed to fetch departures for station ${station.name}`,
           );
           return [];
         }
 
         const data = await response.json();
         const departures: ApiDeparture[] = data.Departure || [];
-        console.log(departures)
-        
         const departureConfigMap = new Map(
-          station.departures.map((d) => [d.line, d])
+          station.departures.map((d) => [d.line, d]),
         );
         const processedDepartures = departures
           .map((departure) => {
@@ -57,9 +79,13 @@ export async function fetchDepartures() {
 
             const lineNumber = departure.ProductAtStop?.line || "Unknown";
             const catOutL = departure.ProductAtStop?.catOutL || "";
-            
-            const transportTypeMatch = catOutL.match(/\b(Buss|Tunnelbana|Tåg|Spårväg)\b/i);
-            const transportType = transportTypeMatch ? transportTypeMatch[1] : "Unknown";
+
+            const transportTypeMatch = catOutL.match(
+              /\b(Buss|Tunnelbana|Tåg|Spårväg)\b/i,
+            );
+            const transportType = transportTypeMatch
+              ? transportTypeMatch[1]
+              : "Unknown";
 
             return {
               name: lineNumber,
@@ -74,7 +100,9 @@ export async function fetchDepartures() {
             const config = departureConfigMap.get(departure.name);
 
             if (!config) {
-              console.log(`Line ${departure.name} not in config for station ${stationName}`);
+              console.log(
+                `Line ${departure.name} not in config for station ${stationName}`,
+              );
               return false;
             }
 
@@ -92,7 +120,9 @@ export async function fetchDepartures() {
 
             if (config.directions) {
               const directionMatches = config.directions.some((filter) =>
-                departure.direction.toLowerCase().includes(filter.toLowerCase())
+                departure.direction
+                  .toLowerCase()
+                  .includes(filter.toLowerCase()),
               );
               if (!directionMatches) return false;
             }
@@ -101,13 +131,10 @@ export async function fetchDepartures() {
           });
         return processedDepartures;
       } catch (stationError) {
-        console.error(
-          `Error fetching departures for station ${station.id}:`,
-          stationError
-        );
+        console.error(`Error fetching departures for station ${station.id}`);
         return [];
       }
-    })
+    }),
   );
 
   const newBusses: ProcessedDeparture[] = [];
@@ -123,7 +150,7 @@ export async function fetchDepartures() {
     }
   });
   const allDepartures = [...newBusses, ...newTrains].sort(
-    (a, b) => (a.timeLeft as number) - (b.timeLeft as number)
+    (a, b) => (a.timeLeft as number) - (b.timeLeft as number),
   );
 
   const departuresByLineAndDirection = new Map<string, ProcessedDeparture[]>();
@@ -138,7 +165,7 @@ export async function fetchDepartures() {
     const key = `${dep.name}|${dep.direction}`;
     const sameLine = departuresByLineAndDirection.get(key) || [];
     const currentIndex = sameLine.findIndex(
-      (d) => d.time === dep.time && d.station === dep.station
+      (d) => d.time === dep.time && d.station === dep.station,
     );
     const nextDep = sameLine[currentIndex + 1];
 
