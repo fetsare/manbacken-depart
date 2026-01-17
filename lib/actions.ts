@@ -42,7 +42,7 @@ export async function fetchDepartures() {
 
         const data = await response.json();
         const departures: ApiDeparture[] = data.Departure || [];
-
+        console.log(departures);
         const departureConfigMap = new Map(
           station.departures.map((d) => [d.line, d])
         );

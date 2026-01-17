@@ -1,27 +1,17 @@
 {
   "stations": [
     {
-      "name": "Kista Centrum",
-      "id": 740012883,
+      "name": "Insjön",
+      "id": 740098069,
       "departures": [
-        { "line": "179" },
-        { "line": "11" },
-        { "line": "178" },
-        { "line": "197" },
-        { "line": "612" },
-        { "line": "685" },
-        { "line": "687" }
+        { "line": "422", "minTimeThreshold": 2 },
+        { "line": "445", "minTimeThreshold": 2 }
       ]
     },
     {
-      "name": "Helenelund",
-      "id": 740000701,
-      "departures": [{ "line": "41" }]
-    },
-    {
-      "name": "Kista alléväg",
-      "id": 740016366,
-      "departures": [{ "line": "514X", "minTimeThreshold": 1 }]
+      "name": "Lagnövägen",
+      "id": 740066324,
+      "departures": [{ "line": "425", "minTimeThreshold": 5 }]
     }
   ]
 }
