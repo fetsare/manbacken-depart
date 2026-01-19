@@ -54,7 +54,7 @@ export async function fetchDepartures(configName: string = "default") {
         const response = await fetch(
           `${RESROBOT_API_BASE_URL}?id=${id}&format=json&accessId=${RESROBOT_ACCESS_ID}&duration=${API_DURATION}`,
           {
-            next: 600,
+            next: { revalidate: 600 },
           },
         );
         if (!response.ok) {
