@@ -2,8 +2,6 @@ import DepartureBoard from "@/components/DepartureBoard";
 import { fetchDepartures } from "@/lib/actions";
 import { notFound } from "next/navigation";
 
-export const revalidate = 600000;
-
 export default async function BoardPage({
   params,
 }: {
