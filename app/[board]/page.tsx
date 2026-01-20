@@ -11,10 +11,6 @@ export default async function BoardPage({
 
   const initialDepartures = await fetchDepartures(board);
 
-  if (!initialDepartures || initialDepartures.length === 0) {
-    notFound();
-  }
-
   return <DepartureBoard initialDepartures={initialDepartures} />;
 }
 
