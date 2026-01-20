@@ -65,10 +65,10 @@ export default function DepartureBoard({
 
   return (
     <main
-      className={"min-h-screen bg-white text-black p-2 sm:p-3 md:p-4 relative"}
+      className={"min-h-screen bg-white text-black p-2 sm:p-3 md:p-4"}
     >
+      <div className="flex justify-between items-center mb-2 sm:mb-3 md:mb-4">
         <Clock />
-      <div className="flex justify-center gap-4 sm:gap-6 md:gap-10 items-center ">
         <p className="text-xs sm:text-sm md:text-base text-gray-600">
           Last updated: {lastUpdated}
         </p>
@@ -101,7 +101,12 @@ export default function DepartureBoard({
               <th
                 className={`${commonPadding} text-right whitespace-nowrap ${headerTextSize} text-orange-500`}
               >
-                Next
+                Arrival
+              </th>
+              <th
+                className={`${commonPadding} text-right whitespace-nowrap ${headerTextSize} text-orange-500`}
+              >
+                Duration
               </th>
             </tr>
           </thead>
@@ -142,7 +147,7 @@ export default function DepartureBoard({
                   <td
                     className={`${commonPadding} text-left text-black ${cellTextSize}`}
                   >
-                    <div className="whitespace-nowrap overflow-hidden text-ellipsis">
+                    <div className="whitespace-nowrap overflow-hidden text-ellipsis leading-normal">
                       {departure.station}{" "}
                       <span className="text-orange-500 mx-0.5 sm:mx-1 md:mx-2">→</span>{" "}
                       {departure.direction.split(" ")[0]}
@@ -151,9 +156,12 @@ export default function DepartureBoard({
                   <td
                     className={`${commonPadding} text-right text-orange-500 ${cellTextSize} whitespace-nowrap`}
                   >
-                    {departure.nextDepartureTimeLeft
-                      ? formatMinutesToReadable(departure.nextDepartureTimeLeft)
-                      : "-"}
+                    {departure.arrivalTime || "-"}
+                  </td>
+                  <td
+                    className={`${commonPadding} text-right text-orange-500 ${cellTextSize} whitespace-nowrap`}
+                  >
+                    {departure.journeyDuration ? formatMinutesToReadable(departure.journeyDuration) : "-"}
                   </td>
                 </tr>
               );

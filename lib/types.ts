@@ -20,6 +20,21 @@ export interface ProcessedDeparture {
   station: string;
   nextDepartureTimeLeft?: number;
   tunnelbanaColor?: "green" | "blue";
+  arrivalTime?: string;
+  journeyDuration?: number;
+}
+
+export interface Stop {
+  name: string;
+  id: string;
+  extId: string;
+  routeIdx: number;
+  lon: number;
+  lat: number;
+  depTime?: string;
+  depDate?: string;
+  arrTime?: string;
+  arrDate?: string;
 }
 
 export interface ApiDeparture {
@@ -30,5 +45,8 @@ export interface ApiDeparture {
     line: string;
     displayNumber: string;
     catOutL: string;
+  };
+  Stops?: {
+    Stop: Stop[];
   };
 }

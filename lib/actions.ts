@@ -52,7 +52,7 @@ export async function fetchDepartures(configName: string = "default") {
         const id = station.id;
 
         const response = await fetch(
-          `${RESROBOT_API_BASE_URL}?id=${id}&format=json&accessId=${RESROBOT_ACCESS_ID}&duration=${API_DURATION}`,
+          `${RESROBOT_API_BASE_URL}?id=${id}&format=json&accessId=${RESROBOT_ACCESS_ID}&duration=${API_DURATION}&passlist=1`, // passlist=1 is used to get all stops after the station
           {
             next: { revalidate: 600 },
           },
@@ -89,6 +89,24 @@ export async function fetchDepartures(configName: string = "default") {
 
             const config = departureConfigMap.get(lineNumber);
 
+            let arrivalTime: string | undefined;
+            let journeyDuration: number | undefined;
+            if (departure.Stops?.Stop && departure.Stops.Stop.length > 0) {
+              const lastStop =
+                departure.Stops.Stop[departure.Stops.Stop.length - 1]; // get the last stop
+              if (lastStop.arrTime) {
+                arrivalTime = lastStop.arrTime.split(":").slice(0, 2).join(":"); // remove seconds in hh:mm:ss format from the api
+                const depTime = formatTimeDifference(departure.time);
+                const arrTime = formatTimeDifference(lastStop.arrTime);
+                if (
+                  typeof depTime === "number" &&
+                  typeof arrTime === "number"
+                ) {
+                  journeyDuration = arrTime - depTime;
+                }
+              }
+            }
+
             return {
               name: lineNumber,
               transportType: transportType,
@@ -97,6 +115,8 @@ export async function fetchDepartures(configName: string = "default") {
               direction: removeParentheses(departure.direction),
               station: stationName,
               tunnelbanaColor: config?.tunnelbanaColor,
+              arrivalTime,
+              journeyDuration,
             };
           })
           .filter((departure) => {
@@ -132,6 +152,7 @@ export async function fetchDepartures(configName: string = "default") {
 
             return true;
           });
+        console.log(processedDepartures);
         return processedDepartures;
       } catch (stationError) {
         console.error(`Error fetching departures for station ${station.id}`);
