@@ -13,8 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Foo Depart",
-  description: "Departures from Foo Bar",
+  title: {
+    template: "%s | Depart",
+    default: "Depart - Transit Boards",
+  },
+  description: "Real-time transit departure information",
+  applicationName: "Depart",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Depart",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({

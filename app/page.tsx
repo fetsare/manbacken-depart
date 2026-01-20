@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { promises as fs } from "fs";
 import path from "path";
+import type { Metadata } from "next";
 
-// Revalidate every 10 minutes
-export const revalidate = 600000;
+export const metadata: Metadata = {
+  title: "Departures",
+};
 
 export default async function Home() {
-  // Read all config files from the configs directory
   const configsDirectory = path.join(process.cwd(), "lib", "configs");
   let configFiles: string[] = [];
 
