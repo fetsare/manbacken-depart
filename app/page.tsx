@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { promises as fs } from "fs";
 import path from "path";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Departures",
@@ -37,6 +39,25 @@ export default async function Home() {
           ) : (
             <p className="text-gray-600">No board configurations found.</p>
           )}
+        </div>
+         <div className="flex items-center mt-4 gap-2">
+          <a
+            href="https://github.com/fetsare/manbacken-depart"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/github-icon.svg"
+              alt="GitHub repository"
+              width={25}
+              height={25}
+            />
+          </a>
+          <img
+            src="https://img.shields.io/github/last-commit/fetsare/manbacken-depart"
+            alt="GitHub last commit"
+          />
         </div>
       </div>
     </main>
