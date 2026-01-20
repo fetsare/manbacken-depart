@@ -1,7 +1,7 @@
 {
   "stations": [
     {
-      "name": "Gullmarsplan T",
+      "name": "Gullmarsplan",
       "id": 740021705,
       "departures": [
         { "line": "19", "minTimeThreshold": 6 },
