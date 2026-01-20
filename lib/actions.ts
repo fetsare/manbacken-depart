@@ -1,6 +1,5 @@
 "use server";
 
-import defaultData from "@/lib/departures.json";
 import {
   type Station,
   type ProcessedDeparture,
@@ -18,30 +17,26 @@ import {
 import { promises as fs } from "fs";
 import path from "path";
 
-export async function fetchDepartures(configName: string = "default") {
+export async function fetchDepartures(configName: string) {
   let stations: Station[];
 
   console.log(`[fetchDepartures] Loading config: ${configName}`);
 
-  if (configName === "default") {
-    stations = defaultData.stations;
-  } else {
-    try {
-      const configPath = path.join(
-        process.cwd(),
-        "lib",
-        "configs",
-        `${configName}.json`,
-      );
-      console.log(`Reading config from: ${configPath}`);
-      const fileContents = await fs.readFile(configPath, "utf8");
-      const data = JSON.parse(fileContents);
-      stations = data.stations;
-      console.log(`Loaded ${stations.length} stations from ${configName}`);
-    } catch (error) {
-      console.error(`Failed to load config ${configName}:`, error);
-      stations = defaultData.stations;
-    }
+  try {
+    const configPath = path.join(
+      process.cwd(),
+      "lib",
+      "configs",
+      `${configName}.json`,
+    );
+    console.log(`Reading config from: ${configPath}`);
+    const fileContents = await fs.readFile(configPath, "utf8");
+    const data = JSON.parse(fileContents);
+    stations = data.stations;
+    console.log(`Loaded ${stations.length} stations from ${configName}`);
+  } catch (error) {
+    console.error(`Failed to load config ${configName}:`, error);
+    throw new Error(`Failed to load config: ${configName}`);
   }
   validateConfig();
 
@@ -152,7 +147,7 @@ export async function fetchDepartures(configName: string = "default") {
 
             return true;
           });
-        console.log(processedDepartures);
+        //console.log(processedDepartures); // for debugging
         return processedDepartures;
       } catch (stationError) {
         console.error(`Error fetching departures for station ${station.id}`);
