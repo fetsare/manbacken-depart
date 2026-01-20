@@ -1,0 +1,20 @@
+{
+  "stations": [
+    {
+      "name": "Gullmarsplan T",
+      "id": 740021705,
+      "departures": [
+        { "line": "19", "minTimeThreshold": 6 },
+        { "line": "17", "minTimeThreshold": 6 },
+        { "line": "18", "minTimeThreshold": 6 }
+      ]
+    },
+    {
+      "name": "Mårtensdal",
+      "id": 740024928,
+      "departures": [
+        { "line": "30", "minTimeThreshold": 6 , "directions": ["Sickla"] }
+      ]
+    }
+  ]
+}

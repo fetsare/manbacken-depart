@@ -87,6 +87,8 @@ export async function fetchDepartures(configName: string = "default") {
               ? transportTypeMatch[1]
               : "Unknown";
 
+            const config = departureConfigMap.get(lineNumber);
+
             return {
               name: lineNumber,
               transportType: transportType,
@@ -94,6 +96,7 @@ export async function fetchDepartures(configName: string = "default") {
               timeLeft: timeDifference,
               direction: removeParentheses(departure.direction),
               station: stationName,
+              tunnelbanaColor: config?.tunnelbanaColor,
             };
           })
           .filter((departure) => {

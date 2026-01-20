@@ -8,7 +8,9 @@
         { "line": "425" },
         { "line": "420" },
         { "line": "445" },
-        { "line": "492" }
+        { "line": "492" },
+        { "line": "13", "tunnelbanaColor": "blue" },
+        { "line": "14", "tunnelbanaColor": "blue" }
       ]
     }
   ]

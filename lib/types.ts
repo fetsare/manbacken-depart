@@ -2,6 +2,7 @@ export interface DepartureConfig {
   line: string;
   directions?: string[];
   minTimeThreshold?: number;
+  tunnelbanaColor?: "green" | "blue";
 }
 
 export interface Station {
@@ -18,6 +19,7 @@ export interface ProcessedDeparture {
   direction: string;
   station: string;
   nextDepartureTimeLeft?: number;
+  tunnelbanaColor?: "green" | "blue";
 }
 
 export interface ApiDeparture {

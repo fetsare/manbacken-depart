@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { type ProcessedDeparture } from "@/lib/types";
 import { formatMinutesToReadable } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Clock from "@/components/Clock";
 
 interface DepartureBoardProps {
@@ -19,7 +18,8 @@ const iconMap: Record<string, string> = {
 
 const lineColorMap: Record<string, string> = {
   Tåg: "bg-[#ec619f]",
-  Tunnelbana: "bg-[#007db8]",
+  Tunnelbana: "bg-[#148541]",
+  "Tunnelbana-blue": "bg-[#007db8]", // we should make this be automatic but works for now
   Buss: "bg-black",
   Spårväg: "bg-[#b65f1f]",
 };
@@ -34,8 +34,12 @@ const cellTextSize = "text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2
 const getRowBackground = (index: number) =>
   index % 2 !== 0 ? "bg-gray-100" : "bg-white";
 
-const getLineColor = (lineType: string) =>
-  lineColorMap[lineType] || "bg-gray-500";
+const getLineColor = (lineType: string, tunnelbanaColor?: "green" | "blue") => {
+  if (lineType === "Tunnelbana" && tunnelbanaColor === "blue") {
+    return lineColorMap["Tunnelbana-blue"];
+  }
+  return lineColorMap[lineType] || "bg-gray-500";
+};
 
 const getIcon = (lineType: string) => iconMap[lineType] || "/pendel.svg";
 
@@ -114,7 +118,8 @@ export default function DepartureBoard({
                   <td className={commonPadding}>
                     <span
                       className={`${getLineColor(
-                        lineType
+                        lineType,
+                        departure.tunnelbanaColor
                       )} text-white rounded-lg sm:rounded-xl px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1.5 2xl:px-4 2xl:py-2 2xl:rounded-2xl font-bold ${cellTextSize} inline-block`}
                     >
                       {departure.name}
