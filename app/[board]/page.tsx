@@ -1,6 +1,9 @@
 import DepartureBoard from "@/components/DepartureBoard";
-import { fetchDepartures } from "@/lib/actions";
+import { getDepartures } from "@/lib/actions";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0; // i dont think this does anything having it at 0 -.-
 
 export async function generateMetadata({
   params,
@@ -8,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ board: string }>;
 }): Promise<Metadata> {
   const { board } = await params;
-  const title = board.charAt(0).toUpperCase() + board.slice(1);
+  const title = board.charAt(0).toUpperCase() + board.slice(1); // departure config as title
 
   return {
     title: title,
@@ -26,7 +29,7 @@ export default async function BoardPage({
 }) {
   const { board } = await params;
 
-  const initialDepartures = await fetchDepartures(board);
+  const initialDepartures = await getDepartures(board);
 
   return <DepartureBoard initialDepartures={initialDepartures} />;
 }
