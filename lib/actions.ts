@@ -77,7 +77,7 @@ export async function fetchDepartures(
   return allResults;
 }
 
-export function processDepartures(
+function processDepartures(
   stationsWithDepartures: StationWithDepartures[],
 ): ProcessedDeparture[] {
   const processedDeparturesPerStation = stationsWithDepartures.map(
@@ -219,5 +219,6 @@ export function processDepartures(
 
 export async function getDepartures(configName: string) {
   const rawDepartures = await fetchDepartures(configName);
+  
   return processDepartures(rawDepartures);
 }
